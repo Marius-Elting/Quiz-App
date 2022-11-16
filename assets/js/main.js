@@ -20,8 +20,8 @@ let data = [
     {
         url: "https://cdn.playbuzz.com/cdn//f063e8fe-ad57-485e-8211-ed2ee0d9a205/467a486b-be3a-4183-90ed-dd6867d5852d.jpg",
         question: "True or False: Iceland is covered in ice.",
-        choice: [true, false],
-        answer: false
+        choice: ["true", "false"],
+        answer: "false"
     },
     {
         url: "https://cdn.playbuzz.com/cdn//f063e8fe-ad57-485e-8211-ed2ee0d9a205/ecf8af7b-8541-4572-b63b-ee7d7f9fc4cc.jpg",
