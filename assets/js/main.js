@@ -128,6 +128,7 @@ function newQuestion() {
                     i = 0;
                     alert("Glückwunsch du hast " + right + " von " + data.length + " Richtig beantwortet");
                     questions.removeChild(div);
+                    newQuestion();
                 };
                 btnpress = 1;
                 let buttons = document.getElementsByTagName("button");
