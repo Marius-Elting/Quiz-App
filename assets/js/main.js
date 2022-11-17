@@ -99,6 +99,7 @@ let questions = document.getElementById("questions");
 let i = 0;
 let right = 0;
 let wrong = 0;
+let btnpress = 0;
 function newQuestion() {
 
     let answerout = document.getElementById("output");
@@ -116,65 +117,64 @@ function newQuestion() {
         let button = document.createElement("button");
         button.innerHTML = answer;
         button.onclick = function (e) {
-            let buttons = document.getElementsByTagName("button");
-            for (let button1 of buttons) {
-                button1.style.backgroundColor = "buttonface";
-            }
-            if (e.target.innerHTML == data[i].answer) {
-                // alert("richtig");
-                button.style.backgroundColor = "green";
-                if (i < 9) {
-                    right++;
-                    i++;
-                    answerout.innerHTML = "Richtig!";
-                    setTimeout(() => {
-                        newQuestion();
-                        answerout.innerHTML = "";
-                        questions.removeChild(div);
-                    }, 500);
-
-                } else if (i = 9) {
-                    right++;
-                    i = 0;
-                    alert("Glückwunsch du hast " + right + " von " + data.length + " Richtig beantwortet");
-                    let resetButton = document.createElement("button");
-                    resetButton.innerHTML = "reset";
-                    resetButton.onclick = newQuestion();
-                    questions.removeChild(div);
-                    for (let button2 of buttons) {
-                        div2.removeChild(button2);
-                    }
-                    questions.appendChild(resetButton);
-                }
+            if (btnpress >= 1) {
+                return;
             } else {
-                button.style.backgroundColor = "red";
-
-                if (i < 9) {
-                    wrong++;
-                    i++;
-                    answerout.innerHTML = "Leider falsch!";
-                    setTimeout(() => {
-                        newQuestion();
-                        answerout.innerHTML = "";
-                        questions.removeChild(div);
-                    }, 500);
-
-                } else if (i = 9) {
-                    wrong++;
+                setTimeout(() => {
+                    btnpress = 0;
+                    console.log(btnpress);
+                }, 550);
+                let res = () => {
                     i = 0;
                     alert("Glückwunsch du hast " + right + " von " + data.length + " Richtig beantwortet");
-                    let resetButton = document.createElement("button");
-                    resetButton.innerHTML = "reset";
-                    resetButton.onclick = newQuestion();
                     questions.removeChild(div);
-                    for (let button2 of buttons) {
-                        div2.removeChild(button2);
+                };
+                btnpress = 1;
+                let buttons = document.getElementsByTagName("button");
+                for (let button1 of buttons) {
+                    button1.style.backgroundColor = "buttonface";
+                }
+                if (e.target.innerHTML == data[i].answer) {
+
+                    // alert("richtig");
+                    button.style.backgroundColor = "green";
+                    if (i < 9) {
+                        right++;
+                        i++;
+                        answerout.innerHTML = "Richtig!";
+                        setTimeout(() => {
+                            newQuestion();
+                            answerout.innerHTML = "";
+                            questions.removeChild(div);
+                        }, 500);
+
+                    } else if (i = 9) {
+                        right++;
+                        res();
                     }
-                    questions.appendChild(resetButton);
+                } else {
+                    button.style.backgroundColor = "red";
+
+                    if (i < 9) {
+                        wrong++;
+                        i++;
+                        answerout.innerHTML = "Leider falsch!";
+                        setTimeout(() => {
+                            newQuestion();
+                            answerout.innerHTML = "";
+                            questions.removeChild(div);
+                        }, 500);
+
+                    } else if (i = 9) {
+                        wrong++;
+                        res();
+
+                    }
+                    console.log(right);
+
                 }
 
             }
-            console.log(right);
         };
         div2.appendChild(button);
 
