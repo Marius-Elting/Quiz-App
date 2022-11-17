@@ -60,19 +60,59 @@ let data = [
         answer: "Pacific Ocean"
     }
 ];
+let questions = document.getElementById("questions");
+// for (let objects in data) {
+//     let div = document.createElement("div");
+//     console.log(data[objects].url);
+//     let img = document.createElement("img");
+//     img.src = data[objects].url;
+//     div.appendChild(img);
+//     let question = document.createElement("p");
+//     question.innerHTML = data[objects].question;
+//     let div2 = document.createElement("div");
+//     div.appendChild(question);
+//     div2.classList.add("div2");
+//     for (let answer of data[objects].choice) {
+//         let button = document.createElement("button");
+//         button.innerHTML = answer;
+//         button.onclick = function (e) {
+//             let buttons = document.getElementsByTagName("button");
+//             for (let button1 of buttons) {
+//                 button1.style.backgroundColor = "buttonface";
+//             }
+//             if (e.target.innerHTML == data[objects].answer) {
+//                 // alert("richtig");
+//                 button.style.backgroundColor = "green";
+//             } else {
+//                 // alert("leider falsch");
+//                 button.style.backgroundColor = "red";
+//             }
+//         };
 
-for (let objects in data) {
+//         div2.appendChild(button);
+//     }
+
+//     div.appendChild(div2);
+
+//     questions.appendChild(div);
+// }
+let i = 0;
+let right = 0;
+let wrong = 0;
+function newQuestion() {
+
+    let answerout = document.getElementById("output");
     let div = document.createElement("div");
-    console.log(data[objects].url);
     let img = document.createElement("img");
-    img.src = data[objects].url;
+
+    img.src = data[i].url;
     div.appendChild(img);
     let question = document.createElement("p");
-    question.innerHTML = data[objects].question;
+    question.innerHTML = data[i].question;
     let div2 = document.createElement("div");
     div.appendChild(question);
     div2.classList.add("div2");
-    for (let answer of data[objects].choice) {
+    for (let answer of data[i].choice) {
         let button = document.createElement("button");
         button.innerHTML = answer;
         button.onclick = function (e) {
@@ -80,19 +120,67 @@ for (let objects in data) {
             for (let button1 of buttons) {
                 button1.style.backgroundColor = "buttonface";
             }
-            if (e.target.innerHTML == data[objects].answer) {
+            if (e.target.innerHTML == data[i].answer) {
                 // alert("richtig");
                 button.style.backgroundColor = "green";
+                if (i < 9) {
+                    right++;
+                    i++;
+                    answerout.innerHTML = "Richtig!";
+                    setTimeout(() => {
+                        newQuestion();
+                        answerout.innerHTML = "";
+                        questions.removeChild(div);
+                    }, 500);
+
+                } else if (i = 9) {
+                    right++;
+                    i = 0;
+                    alert("Glückwunsch du hast " + right + " von " + data.length + " Richtig beantwortet");
+                    let resetButton = document.createElement("button");
+                    resetButton.innerHTML = "reset";
+                    resetButton.onclick = newQuestion();
+                    questions.removeChild(div);
+                    for (let button2 of buttons) {
+                        div2.removeChild(button2);
+                    }
+                    questions.appendChild(resetButton);
+                }
             } else {
-                // alert("leider falsch");
                 button.style.backgroundColor = "red";
+
+                if (i < 9) {
+                    wrong++;
+                    i++;
+                    answerout.innerHTML = "Leider falsch!";
+                    setTimeout(() => {
+                        newQuestion();
+                        answerout.innerHTML = "";
+                        questions.removeChild(div);
+                    }, 500);
+
+                } else if (i = 9) {
+                    wrong++;
+                    i = 0;
+                    alert("Glückwunsch du hast " + right + " von " + data.length + " Richtig beantwortet");
+                    let resetButton = document.createElement("button");
+                    resetButton.innerHTML = "reset";
+                    resetButton.onclick = newQuestion();
+                    questions.removeChild(div);
+                    for (let button2 of buttons) {
+                        div2.removeChild(button2);
+                    }
+                    questions.appendChild(resetButton);
+                }
+
             }
+            console.log(right);
         };
-
         div2.appendChild(button);
+
+        div.appendChild(div2);
+
+        questions.appendChild(div);
     }
-
-    div.appendChild(div2);
-
-    document.body.appendChild(div);
 }
+newQuestion();
